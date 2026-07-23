@@ -1,0 +1,6 @@
+# Aucune dépendance externe requise : le script utilise uniquement
+# la bibliothèque standard de Python (json, csv, argparse, logging,
+# collections, pathlib, datetime).
+#
+# Pour le développement / les tests (optionnel) :
+# pytest>=8.0.0

@@ -1,0 +1,16 @@
+{"timestamp": "2024-03-01T09:58:12+00:00", "level": "INFO", "service": "payments-api", "message": "Payment request received", "client_id": 1042, "bank": "BNP", "status_code": 200}
+{"timestamp": "2024-03-01T10:00:03+00:00", "level": "ERROR", "service": "payments-api", "message": "Timeout while calling bank gateway", "client_id": 1042, "bank": "BNP", "status_code": 504}
+{"timestamp": "2024-03-01T10:00:45+00:00", "level": "ERROR", "service": "payments-api", "message": "Retry failed, gateway still unreachable", "client_id": 1042, "bank": "BNP", "status_code": 504}
+{"timestamp": "2024-03-01T10:01:30+00:00", "level": "CRITICAL", "service": "payments-api", "message": "Payment aborted after 3 failed retries", "client_id": 1042, "bank": "BNP", "status_code": 500}
+{"timestamp": "2024-03-01T10:02:00+00:00", "level": "ERROR", "service": "notifications-service", "message": "Failed to send payment failure email", "client_id": 1042, "bank": "BNP", "status_code": 500}
+{"timestamp": "2024-03-01T10:15:00+00:00", "level": "INFO", "service": "payments-api", "message": "Payment request received", "client_id": 2087, "bank": "Societe Generale", "status_code": 200}
+{"timestamp": "2024-03-01T10:15:02+00:00", "level": "INFO", "service": "payments-api", "message": "Payment confirmed", "client_id": 2087, "bank": "Societe Generale", "status_code": 200}
+{"timestamp": "2024-03-01T10:20:11+00:00", "level": "ERROR", "service": "auth-service", "message": "Invalid session token", "client_id": 3391, "bank": "Credit Agricole", "status_code": 401}
+{"timestamp": "2024-03-01T10:20:40+00:00", "level": "INFO", "service": "auth-service", "message": "Session refreshed successfully", "client_id": 3391, "bank": "Credit Agricole", "status_code": 200}
+{"timestamp": "2024-03-01T10:30:05+00:00", "level": "ERROR", "service": "payments-api", "message": "Insufficient funds", "client_id": 4501, "bank": "BNP", "status_code": 402}
+{"timestamp": "2024-03-01T10:31:20+00:00", "level": "ERROR", "service": "payments-api", "message": "Card declined by issuer", "client_id": 4501, "bank": "BNP", "status_code": 402}
+{"timestamp": "2024-03-01T10:32:00+00:00", "level": "ERROR", "service": "payments-api", "message": "Card declined by issuer (retry)", "client_id": 4501, "bank": "BNP", "status_code": 402}
+{"timestamp": "2024-03-01T10:33:15+00:00", "level": "CRITICAL", "service": "payments-api", "message": "Account flagged after repeated declines", "client_id": 4501, "bank": "BNP", "status_code": 403}
+{"timestamp": "2024-03-01T10:45:00+00:00", "level": "INFO", "service": "notifications-service", "message": "Weekly statement sent", "client_id": 5620, "bank": "LCL", "status_code": 200}
+{"timestamp": "2024-03-01T11:00:00+00:00", "level": "ERROR", "service": "payments-api", "message": "Gateway timeout", "client_id": 1042, "bank": "BNP", "status_code": 504}
+{"timestamp": "2024-03-01T11:05:00+00:00", "level": "WARNING", "service": "auth-service", "message": "Multiple login attempts detected", "client_id": 6712, "bank": "LCL", "status_code": 429}
