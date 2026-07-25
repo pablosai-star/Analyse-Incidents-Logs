@@ -82,3 +82,9 @@ Un monitor a été configuré sur cette requête pour déclencher une alerte aut
 - Détection d'anomalies par comparaison à une baseline historique
 - Dashboard Datadog dédié (metrics + logs + monitors sur une seule vue)
 - Export automatique des rapports vers un espace partagé (Slack, email)
+
+  # Exemple indicateurs Dashboard Datadog
+  <img width="1719" height="828" alt="image" src="https://github.com/user-attachments/assets/f75069ed-3a57-4343-8f02-22372382297c" />
+
+-C'est un dashboard complet et cohérent, qui répond à 4 questions différentes qu'un support se pose face à un incident : "ça évolue comment dans le temps", "qui est le plus touché", "combien de critique en tout", "qu'est-ce qui se passe précisément"
+
