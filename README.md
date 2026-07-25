@@ -1,89 +1,84 @@
-# Analyse-Incidents-Logs
-Python tool for analyzing application logs (.jsonl): automatic client incident detection via error counting, timeline reconstruction, and critical-case flagging. Generates text and CSV reports.
+# Analyse d'Incidents Logs
 
-FR:
-Outil Python d'analyse de logs applicatifs (.jsonl) : détection automatique des incidents clients par comptage d'erreurs, reconstruction de chronologie et repérage des cas critiques. Génère des rapports texte et CSV.
-
-Topics (tags GitHub): python logging observability incident-management data-analysis cli
-
-# Analyse d'incidents applicatifs (logs JSON Lines)
-
-Outil en Python pur (sans dépendance externe) pour analyser des logs applicatifs
-au format `.jsonl` et repérer automatiquement les clients à surveiller en cas
-d'incident (paiement en échec, erreurs répétées, etc.).
+Outil Python d'analyse de logs applicatifs, avec détection automatique des incidents critiques et intégration à une plateforme d'observabilité (Datadog).
 
 ## Contexte
 
-Dans un contexte de support applicatif / observabilité, les logs bruts sont
-souvent trop volumineux pour être lus manuellement. Ce script automatise
-trois tâches courantes :
+Projet réalisé dans le cadre d'une montée en compétence sur les outils d'observabilité (Datadog/Kibana) et le scripting d'analyse d'incidents, pour un poste de Référent Support Applicatif.
 
-- **Comptage** des erreurs (`ERROR` / `CRITICAL`) par service et par client
-- **Reconstruction chronologique** d'un incident pour un client donné
-  (rejouer la séquence d'événements)
-- **Détection d'escalade** : identifier les clients dont le nombre d'erreurs
-  dépasse un seuil ET qui ont au moins une erreur `CRITICAL`, pour prioriser
-  le traitement
+Le script simule un cas d'usage réaliste : l'analyse de logs d'une plateforme de services bancaires (signature EBICS, prélèvements, flux bancaires) pour identifier rapidement les incidents nécessitant une intervention prioritaire.
 
 ## Fonctionnalités
 
-- Chargement robuste d'un fichier `.jsonl` (les lignes invalides sont
-  ignorées avec un avertissement, sans faire planter le script)
-- Génération d'un **rapport texte** lisible (compte-rendu d'incident)
-- Export **CSV** exploitable dans Excel / Power BI
-- Interface en ligne de commande (seuil et fichier d'entrée configurables)
+- **Chargement** de logs au format JSON Lines (`.jsonl`)
+- **Agrégation** des erreurs par service et par client
+- **Reconstruction chronologique** d'un incident pour un client donné (facilite la reproduction du problème)
+- **Détection automatique d'escalade** : identifie les clients à surveiller en priorité (nombre d'erreurs élevé + présence d'un log `CRITICAL`)
+- **Génération de rapports** au format texte (lisible) et CSV (exploitable dans Excel/Power BI)
+- **Envoi vers Datadog** via l'API Logs (`/api/v2/logs`), pour visualisation dans le Log Explorer et déclenchement de monitors/alertes
 
 ## Structure du projet
 
 ```
-.
-├── analyse_incidents.py     # Script principal
-├── data/
-│   └── sample_logs.jsonl    # Jeu de données d'exemple (16 logs, 2 scénarios d'incident)
-├── requirements.txt
+├── Analyse-Incidents-Logs.py   # Script principal
+├── logs.jsonl                  # Jeu de logs d'exemple (données fictives)
+├── .gitignore
 └── README.md
 ```
 
 ## Installation
 
-Aucune dépendance externe : seule la bibliothèque standard de Python (3.10+)
-est utilisée.
-
 ```bash
-git clone https://github.com/pablosai-star/Analyse-Incidents-Logs.git
-cd Analyse-Incidents-Logs
+pip install requests python-dotenv
+```
+
+Crée un fichier `.env` à la racine du projet (non versionné) :
+
+```
+DATADOG_API_KEY=ta_cle_api
+DATADOG_SITE=datadoghq.eu
 ```
 
 ## Utilisation
 
 ```bash
-# Avec les données d'exemple fournies
-python analyse_incidents.py --input data/sample_logs.jsonl
-
-# Avec un seuil d'escalade personnalisé (par défaut : 3 erreurs)
-python analyse_incidents.py --input data/sample_logs.jsonl --seuil 5
-
-# Avec un préfixe de sortie personnalisé
-python analyse_incidents.py --input data/sample_logs.jsonl --output-prefix rapport_mars
+python Analyse-Incidents-Logs.py --input logs.jsonl
 ```
 
-Le script génère deux fichiers dans le dossier courant :
-- `rapport_incidents.txt` : compte-rendu lisible avec la chronologie des
-  clients suspects
-- `rapport_incidents.csv` : export brut de tous les logs
+Le script affiche dans la console :
+- Le nombre de logs chargés
+- Les erreurs agrégées par service et par client
+- La liste des clients à surveiller en priorité
+- La chronologie détaillée de chaque incident détecté
 
-## Format d'entrée attendu
+Il génère également deux rapports (`rapport_incidents.txt` et `.csv`) et envoie les logs vers Datadog pour exploitation dans le Log Explorer.
 
-Chaque ligne du fichier `.jsonl` est un objet JSON avec les clés suivantes :
+## Exemple de sortie
 
-```json
-{
-    "timestamp": "2024-03-01T10:15:00+00:00",
-    "level": "ERROR",
-    "service": "payments-api",
-    "message": "Timeout while calling bank gateway",
-    "client_id": 1042,
-    "bank": "BNP",
-    "status_code": 504
-}
 ```
+20 logs chargés
+Erreurs par service : {'ebics-signature-service': 3, 'auth-service': 3, 'directdebit-service': 5}
+Erreurs par client  : {45892: 3, 31220: 3, 50213: 5}
+Clients à surveiller en priorité : [50213]
+
+--- Chronologie du client 50213 ---
+2026-07-22T09:05:48Z - CRITICAL - Timeout connexion passerelle bancaire
+2026-07-22T09:14:39Z - ERROR - Timeout connexion passerelle bancaire
+...
+```
+
+## Côté observabilité
+
+Les logs envoyés à Datadog peuvent être filtrés via une requête simple dans le Log Explorer :
+
+```
+service:directdebit-service (status:error OR status:critical)
+```
+
+Un monitor a été configuré sur cette requête pour déclencher une alerte automatique (email) dès qu'un seuil d'erreurs est dépassé sur une fenêtre de 10 minutes — reproduisant un scénario réel de supervision applicative.
+
+## Pistes d'évolution
+
+- Détection d'anomalies par comparaison à une baseline historique
+- Dashboard Datadog dédié (metrics + logs + monitors sur une seule vue)
+- Export automatique des rapports vers un espace partagé (Slack, email)
