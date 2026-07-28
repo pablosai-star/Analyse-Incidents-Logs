@@ -1,0 +1,21 @@
+timestamp,level,service,message,client_id,bank,status_code
+2026-07-22T08:12:03Z,INFO,ebics-signature-service,Contrat EBICS signé avec succès,45892,BNP,200
+2026-07-22T08:15:41Z,INFO,auth-service,Connexion utilisateur réussie,31220,SG,200
+2026-07-22T08:22:17Z,ERROR,ebics-signature-service,Echec signature contrat EBICS: certificat expire,45892,BNP,403
+2026-07-22T08:23:02Z,WARNING,ftp-banque-service,Latence elevee detectee sur le transfert,19004,CA,200
+2026-07-22T08:30:55Z,ERROR,ebics-signature-service,Echec signature contrat EBICS: certificat expire,45892,BNP,403
+2026-07-22T08:31:10Z,INFO,espace-flux-service,Flux traite avec succes,22011,BPCE,200
+2026-07-22T08:45:33Z,ERROR,auth-service,Echec authentification: mot de passe invalide,31220,SG,401
+2026-07-22T09:02:14Z,ERROR,ebics-signature-service,Echec signature contrat EBICS: certificat expire,45892,BNP,403
+2026-07-22T09:05:48Z,CRITICAL,directdebit-service,Timeout connexion passerelle bancaire,50213,LCL,504
+2026-07-22T09:10:22Z,INFO,netcash-service,Solde recupere avec succes,22011,BPCE,200
+2026-07-22T09:14:39Z,ERROR,directdebit-service,Timeout connexion passerelle bancaire,50213,LCL,504
+2026-07-22T09:20:07Z,WARNING,ftp-banque-service,Latence elevee detectee sur le transfert,19004,CA,200
+2026-07-22T09:33:51Z,ERROR,directdebit-service,Timeout connexion passerelle bancaire,50213,LCL,504
+2026-07-22T09:40:19Z,INFO,ebics-signature-service,Contrat EBICS signe avec succes,60044,CIC,200
+2026-07-22T09:48:56Z,ERROR,auth-service,Echec authentification: mot de passe invalide,31220,SG,401
+2026-07-22T10:01:33Z,CRITICAL,directdebit-service,Timeout connexion passerelle bancaire,50213,LCL,504
+2026-07-22T10:07:12Z,INFO,espace-flux-service,Flux traite avec succes,22011,BPCE,200
+2026-07-22T10:15:45Z,ERROR,auth-service,Echec authentification: mot de passe invalide,31220,SG,401
+2026-07-22T10:22:38Z,INFO,netcash-service,Solde recupere avec succes,60044,CIC,200
+2026-07-22T10:31:59Z,ERROR,directdebit-service,Timeout connexion passerelle bancaire,50213,LCL,504
