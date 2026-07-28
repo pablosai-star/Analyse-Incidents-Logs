@@ -16,16 +16,16 @@ Le script simule un cas d'usage réaliste : l'analyse de logs d'une plateforme d
 - **Détection automatique d'escalade** : identifie les clients à surveiller en priorité (nombre d'erreurs élevé + présence d'un log `CRITICAL`)
 - **Génération de rapports** au format texte (lisible) et CSV (exploitable dans Excel/Power BI)
 - **Envoi vers Datadog** via l'API Logs (`/api/v2/logs`), pour visualisation dans le Log Explorer et déclenchement de monitors/alertes
+- **Reproduction d'incident en bash** : script complémentaire qui isole les logs d'un client précis et génère les commandes de rejeu correspondantes
 
 ## Structure du projet
 
-```
-├── Analyse-Incidents-Logs.py   # Script principal
+├── Analyse-Incidents-Logs.py   # Script principal (Python)
+├── reproduire_incident.sh      # Script de reproduction d'incident (Bash)
 ├── logs.jsonl                  # Jeu de logs d'exemple (données fictives)
+├── rapport_incidents.csv       # Export utilisé par le script bash
 ├── .gitignore
 └── README.md
-```
-
 ## Installation
 
 ```bash
@@ -76,6 +76,28 @@ service:directdebit-service (status:error OR status:critical)
 ```
 
 Un monitor a été configuré sur cette requête pour déclencher une alerte automatique (email) dès qu'un seuil d'erreurs est dépassé sur une fenêtre de 10 minutes — reproduisant un scénario réel de supervision applicative.
+
+## Reproduction d'incident (Bash)
+
+Le script `reproduire_incident.sh` isole les logs d'un client donné à partir du rapport CSV et génère les commandes de rejeu correspondantes (requêtes `curl` simulées vers le service concerné).
+
+\```bash
+bash reproduire_incident.sh <client_id>
+\```
+
+Exemple :
+\```bash
+bash reproduire_incident.sh 50213
+\```
+
+\```
+--- Rejeu de l'incident : 2026-07-22T09:05:48Z ---
+curl -X POST https://api-interne/directdebit-service/replay \
+  -H 'Content-Type: application/json' \
+  -d '{"client_id": "50213", "bank": "LCL", "original_status": "504"}'
+\```
+
+Le script utilise `IFS` pour parser le CSV champ par champ, et nettoie les retours chariot (`tr -d '\r'`) pour rester compatible avec des fichiers générés sous Windows.
 
 ## Pistes d'évolution
 
