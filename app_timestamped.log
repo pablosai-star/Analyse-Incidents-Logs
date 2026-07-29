@@ -1,0 +1,14 @@
+2026-07-29 14:00:01 INFO démarrage application
+2026-07-29 14:00:05 INFO connexion base de données OK
+2026-07-29 14:01:10 ERROR timeout requête
+2026-07-29 14:01:11 ERROR timeout requête
+2026-07-29 14:01:12 ERROR connexion refusée
+2026-07-29 14:01:13 ERROR timeout requête
+2026-07-29 14:02:00 INFO reprise normale
+2026-07-29 14:03:00 DEBUG variable cache=null
+2026-07-29 14:04:01 ERROR connexion refusée
+2026-07-29 14:05:00 INFO arrêt propre
+2026-07-29 14:10:00 INFO nouvelle requête
+2026-07-29 14:10:01 ERROR timeout
+2026-07-29 14:10:02 ERROR connexion refusée
+2026-07-29 14:10:03 INFO reprise

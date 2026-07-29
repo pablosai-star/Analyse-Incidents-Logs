@@ -1,0 +1,12 @@
+INFO démarrage
+ERROR connexion refusée
+INFO traitement OK
+ERROR timeout
+DEBUG variable x=5
+INFO démarrage
+ERROR connexion refusée
+INFO traitement OK
+ERROR timeout
+ERROR connexion refusée
+DEBUG variable x=5
+INFO arrêt propre
