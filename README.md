@@ -99,6 +99,32 @@ curl -X POST https://api-interne/directdebit-service/replay \
 
 Le script utilise `IFS` pour parser le CSV champ par champ, et nettoie les retours chariot (`tr -d '\r'`) pour rester compatible avec des fichiers générés sous Windows.
 
+
+# Analyse des incidents LOG
+
+Scripts Bash d'analyse et de supervision de logs applicatifs.
+
+## Scripts
+
+| Fichier | Description |
+|--------|-------------|
+| `rapport.sh` | Génère un rapport d'incident à partir d'un fichier log |
+| `detection_pic.sh` | Détecte les pics d'erreurs par tranche de temps |
+| `surveillance.sh` | Surveille un log en temps réel et alerte selon un seuil |
+
+## Utilisation
+
+```bash
+./rapport.sh
+./detection_pic.sh
+./surveillance.sh
+```
+
+## Environnement
+- Bash / Git Bash (Windows)
+- Logs applicatifs structurés avec niveaux INFO / ERROR / DEBUG
+
+  
 ## Pistes d'évolution
 
 - Détection d'anomalies par comparaison à une baseline historique
