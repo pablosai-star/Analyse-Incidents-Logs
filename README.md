@@ -21,11 +21,19 @@ Le script simule un cas d'usage réaliste : l'analyse de logs d'une plateforme d
 ## Structure du projet
 
 ├── Analyse-Incidents-Logs.py   # Script principal (Python)
-├── reproduire_incident.sh      # Script de reproduction d'incident (Bash)
-├── logs.jsonl                  # Jeu de logs d'exemple (données fictives)
+├── Dashboard_KIBANA_4_indicators.png
+├── README.md
+├── app.log
+├── app.timestamped.log
+├── check_api.sh
+├── detection_pic.sh
+├── rapport.sh
 ├── rapport_incidents.csv       # Export utilisé par le script bash
-├── .gitignore
-└── README.md
+├── reproduire_incident.sh      # Script de reproduction d'incident (Bash)
+├── sample_logs.jsonl                  # Jeu de logs d'exemple (données fictives)
+└── .gitignore
+
+
 ## Installation
 
 ```bash
@@ -100,6 +108,7 @@ curl -X POST https://api-interne/directdebit-service/replay \
 Le script utilise `IFS` pour parser le CSV champ par champ, et nettoie les retours chariot (`tr -d '\r'`) pour rester compatible avec des fichiers générés sous Windows.
 
 
+
 # Analyse des incidents LOG
 
 Scripts Bash d'analyse et de supervision de logs applicatifs.
@@ -125,14 +134,34 @@ Scripts Bash d'analyse et de supervision de logs applicatifs.
 - Logs applicatifs structurés avec niveaux INFO / ERROR / DEBUG
 
   
-## Pistes d'évolution
 
-- Détection d'anomalies par comparaison à une baseline historique
-- Dashboard Datadog dédié (metrics + logs + monitors sur une seule vue)
-- Export automatique des rapports vers un espace partagé (Slack, email)
+## check_api.sh — Vérification et test d'API REST
 
-  # Exemple indicateurs Dashboard Datadog
+Script bash pour tester et diagnostiquer des endpoints d'API REST : requêtes GET/POST, vérification des codes de statut HTTP, et mode debug pour l'inspection détaillée des réponses.
+
+Fonctionnalités :
+
+Requêtes GET et POST via curl
+Vérification automatique des codes de statut HTTP (200, 404, 500...)
+Mode debug pour afficher headers et corps de réponse en détail
+Testé sur l'API publique JSONPlaceholder dans le cadre d'une formation Web Services (HTTP, curl, Postman)
+
+Usage :
+
+bash
+./check_api.sh <url> [--post] [--debug]
+
+Contexte : ce script s'inscrit dans la continuité des outils de supervision applicative du dépôt (rapport.sh, detection_pic.sh, surveillance.sh) — même logique de diagnostic automatisé, appliquée cette fois aux échanges API plutôt qu'aux logs applicatifs.
+
+## Exemple indicateurs Dashboard Datadog
   <img width="1719" height="828" alt="image" src="https://github.com/user-attachments/assets/f75069ed-3a57-4343-8f02-22372382297c" />
 
 -C'est un dashboard complet et cohérent, qui répond à 4 questions différentes qu'un support se pose face à un incident : "ça évolue comment dans le temps", "qui est le plus touché", "combien de critique en tout", "qu'est-ce qui se passe précisément"
+
+  
+## Pistes d'évolution
+
+- Détection d'anomalies par comparaison à une baseline historique
+- Export automatique des rapports vers un espace partagé (Slack, email)
+
 
