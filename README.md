@@ -135,7 +135,7 @@ Scripts Bash d'analyse et de supervision de logs applicatifs.
 
   
 
-## check_api.sh — Vérification et test d'API REST
+## Check_api.sh — Vérification et test d'API REST
 
 Script bash pour tester et diagnostiquer des endpoints d'API REST : requêtes GET/POST, vérification des codes de statut HTTP, et mode debug pour l'inspection détaillée des réponses.
 
